@@ -121,4 +121,5 @@ def loadaerdat(datafile='/tmp/aerout.dat', length=0, version=V1, debug=1, camera
         except:
             print("failed to print statistics")
 
+
     return timestamps, xaddr, yaddr, pol
