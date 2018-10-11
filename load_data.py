@@ -38,8 +38,10 @@ def encode_yuv(yuvfile):
     enc_root = './encode'
     infile = os.path.join(yuv_root, yuvfile + '.yuv')
     outfile = os.path.join(enc_root, yuvfile + '.265')
-    cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -lossless 1 -c:v libx265 -preset slow -frames 100' + ' ' + outfile
-    # cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -qp 0 -c:v libx265 -preset slow -frames 100' + ' ' + outfile
+    logfile = os.path.join(enc_root, yuvfile + '.txt')
+    cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -x265-params --lossless -frames 100' + ' ' + outfile + ' 2> ' + logfile
+    # cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -crf 0 -frames 100' + ' ' + outfile + ' 2> ' + logfile
+    # cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -x265-params --qp 0 -frames 100' + ' ' + outfile + ' 2> ' + logfile
     print(cmd + '\n')
     os.system(cmd)
 
