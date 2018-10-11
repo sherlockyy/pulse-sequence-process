@@ -39,8 +39,13 @@ def encode_yuv(yuvfile):
     infile = os.path.join(yuv_root, yuvfile + '.yuv')
     outfile = os.path.join(enc_root, yuvfile + '.265')
     logfile = os.path.join(enc_root, yuvfile + '.txt')
-    cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -x265-params --lossless -frames 100' + ' ' + outfile + ' 2> ' + logfile
+
+    # --lossless Enables true lossless coding by bypassing scaling, transform, quantization and in-loop filter processes. Slower presets will generally achieve better compression efficiency.
+    cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -x265-params lossless=1' + ' ' + outfile + ' 2> ' + logfile
+
     # cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -crf 0 -frames 100' + ' ' + outfile + ' 2> ' + logfile
+
+    # Note that QP 0 does not cause lossless encoding, it only disables quantization. Default disabled.
     # cmd = 'ffmpeg -s 400x1000 -pix_fmt gray' + ' -i ' + infile + ' -c:v libx265 -preset slow -x265-params --qp 0 -frames 100' + ' ' + outfile + ' 2> ' + logfile
     print(cmd + '\n')
     os.system(cmd)
